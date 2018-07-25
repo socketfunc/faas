@@ -1,0 +1,19 @@
+{
+  "name": "socketfunc-runtime-nodejs-example",
+  "private": true,
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/socketfunc/faas"
+  },
+  "dependencies": {
+    "socketfunc": "file:../../runtime/environment/nodejs"
+  },
+  "scripts": {
+    "start": "_RUNTIME_PORT=8000 node server.js"
+  },
+  "devDependencies": {
+    "grpc": "^1.13.0"
+  }
+}

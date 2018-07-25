@@ -1,0 +1,9 @@
+{
+  "name": "faas",
+  "private": true,
+  "version": "0.0.1",
+  "dependencies": {},
+  "devDependencies": {
+    "standard": "^11.0.1"
+  }
+}

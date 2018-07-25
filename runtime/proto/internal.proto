@@ -1,0 +1,51 @@
+// runtime internal protocol
+
+syntax = "proto3";
+
+package runtime;
+
+service Internal {
+	rpc Pipe (PipeRequest) returns (stream PipeResponse) {}
+	rpc Specialize (SpecializeRequest) returns (SpecializeResponse) {}
+	rpc Healthz (Empty) returns (HealthzResponse) {}
+}
+
+enum Cmd {
+	Send = 0; // low level response
+	REPLY = 1;
+	BROADCAST = 2;
+}
+
+message Empty {}
+
+message Packet {
+	string topic = 1;
+	string event = 2;
+	int32 id = 3;
+	bytes payload = 4;
+}
+
+message PipeRequest {
+	int32 version = 1;
+	string id = 2;
+	Packet packet = 3;
+}
+
+message PipeResponse {
+	int32 version = 1;
+	Cmd cmd = 2;
+	Packet packet = 3;
+}
+
+message SpecializeRequest {
+	string codePath = 1;
+	string entryPoint = 2;
+}
+
+message SpecializeResponse {
+
+}
+
+message HealthzResponse {
+	int32 statusCode = 1;
+}

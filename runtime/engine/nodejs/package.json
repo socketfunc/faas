@@ -1,0 +1,16 @@
+{
+  "name": "socketfunc",
+  "version": "0.0.1",
+  "dependencies": {
+    "grpc": "^1.13.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/socketfunc/faas"
+  },
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "scripts": {
+    "cp-proto": "cp ../../proto/internal.proto ./proto"
+  }
+}

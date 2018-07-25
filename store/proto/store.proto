@@ -1,0 +1,94 @@
+// store protocol
+
+syntax = "proto3";
+
+package store;
+
+service Kvs {
+	rpc Get (GetRequest) returns (GetResponse) {}
+	rpc Put (PutRequest) returns (PutResponse) {}
+	rpc Del (DelRequest) returns (DelResponse) {}
+	rpc DelAll (DelRequest) returns (DelResponse) {}
+}
+
+enum Type {
+	Null = 0; // null
+	Int = 1; // int64 8byte
+	Float = 2; // float64 8byte
+	Bool = 3; // bool 1byte
+	String = 4; // string
+	blob = 5; // Unimplemented bytes
+	array = 6; // Unimplemented array
+	json = 7; // Unimplemented json
+}
+
+message Value {
+	Type type = 1;
+	bytes data = 2;
+}
+
+enum Comp {
+	Eq = 0;
+	Gt = 1;
+	Gte = 2;
+	Lt = 3;
+	Lte = 4;
+	Ne = 5;
+	Exists = 6;
+}
+
+enum Op {
+	Inc = 0; // Increments the value
+	Set = 1; // Sets the value
+	Unset = 2; // Remove the specified field
+	CurrentDate = 3; // Sets the value a field to current date
+	Min = 4;
+	Max = 5;
+	Mul = 6;
+	SetOnInsert = 7;
+}
+
+message Filter {
+	Comp Comp = 1;
+	string name = 2;
+	Value value = 3;
+}
+
+message Update {
+	Op op = 1;
+	string name = 2;
+	Value value = 3;
+}
+
+message GetRequest {
+	string namespace = 1;
+	string key = 2;
+}
+
+message GetResponse {
+	string namespace = 1;
+	string key = 2;
+	map<string, Value> entity = 3;
+}
+
+message PutRequest {
+	string namespace = 1;
+    string key = 2;
+    repeated Filter filters = 3;
+    repeated Update updates = 4;
+}
+
+message PutResponse {
+	string namespace = 1;
+	string key = 2;
+	map<string, Value> entity = 3;
+}
+
+message DelRequest {
+	string namespace = 1;
+	string key = 2;
+}
+
+message DelResponse {
+	bool success = 1;
+}

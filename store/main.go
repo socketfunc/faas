@@ -4,9 +4,12 @@ import (
 	"log"
 	"net"
 
+	"google.golang.org/grpc"
+
 	"github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/grpc-ecosystem/go-grpc-middleware/recovery"
-	"google.golang.org/grpc"
+	"github.com/socketfunc/faas/store/kvs"
+	"github.com/socketfunc/faas/store/proto"
 )
 
 func main() {
@@ -22,7 +25,7 @@ func main() {
 			grpc_recovery.UnaryServerInterceptor(),
 		)),
 	)
-
+	store.RegisterKvsServer(s, kvs.New())
 	if err := s.Serve(lis); err != nil {
 		log.Fatal(err)
 	}

@@ -5,10 +5,16 @@ syntax = "proto3";
 package store;
 
 service Kvs {
-	rpc Get (GetRequest) returns (GetResponse) {}
-	rpc Put (PutRequest) returns (PutResponse) {}
-	rpc Del (DelRequest) returns (DelResponse) {}
-	rpc DelAll (DelRequest) returns (DelResponse) {}
+	rpc Command (stream CommandRequest) returns (stream CommandResponse) {}
+}
+
+enum Command {
+	Get = 0;
+	Put = 1;
+	Modify = 2;
+	Del = 3;
+	DellAll = 4;
+	Keys = 5;
 }
 
 enum Type {
@@ -25,6 +31,10 @@ enum Type {
 message Value {
 	Type type = 1;
 	bytes data = 2;
+}
+
+message Entity {
+    map<string, Value> data = 1;
 }
 
 enum Comp {
@@ -68,20 +78,31 @@ message GetRequest {
 message GetResponse {
 	string namespace = 1;
 	string key = 2;
-	map<string, Value> entity = 3;
+	Entity entity = 3;
 }
 
 message PutRequest {
+    string namespace = 1;
+    string key = 2;
+    Entity entity = 3;
+}
+
+message PutResponse {
+    bool successful = 1;
+}
+
+message ModifyRequest {
 	string namespace = 1;
     string key = 2;
     repeated Filter filters = 3;
     repeated Update updates = 4;
 }
 
-message PutResponse {
+message ModifyResponse {
 	string namespace = 1;
 	string key = 2;
-	map<string, Value> entity = 3;
+	bool successful = 3;
+	Entity entity = 4;
 }
 
 message DelRequest {
@@ -89,6 +110,28 @@ message DelRequest {
 	string key = 2;
 }
 
-message DelResponse {
-	bool success = 1;
+message DelResponse {}
+
+message KeysRequest {}
+
+message KeysResponse {
+	repeated string keys = 1;
+}
+
+message CommandRequest {
+	Command command = 1;
+	GetRequest get = 2;
+	PutRequest put = 3;
+	ModifyRequest modify = 4;
+	DelRequest del = 5;
+	KeysRequest keys = 6;
+}
+
+message CommandResponse {
+	Command command = 1;
+	GetResponse get = 2;
+	PutResponse put = 3;
+	ModifyResponse modify = 4;
+	DelResponse del = 5;
+	KeysResponse keys = 6;
 }

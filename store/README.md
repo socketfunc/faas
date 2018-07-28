@@ -1,3 +1,3 @@
 # Store
 
-store is hashmap in memory store.
+atomic hashes store

@@ -23,80 +23,48 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type Command int32
-
-const (
-	Command_Get     Command = 0
-	Command_Put     Command = 1
-	Command_Modify  Command = 2
-	Command_Del     Command = 3
-	Command_DellAll Command = 4
-	Command_Keys    Command = 5
-)
-
-var Command_name = map[int32]string{
-	0: "Get",
-	1: "Put",
-	2: "Modify",
-	3: "Del",
-	4: "DellAll",
-	5: "Keys",
-}
-var Command_value = map[string]int32{
-	"Get":     0,
-	"Put":     1,
-	"Modify":  2,
-	"Del":     3,
-	"DellAll": 4,
-	"Keys":    5,
-}
-
-func (x Command) String() string {
-	return proto.EnumName(Command_name, int32(x))
-}
-func (Command) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{0}
-}
-
 type Type int32
 
 const (
 	Type_Null   Type = 0
 	Type_Int    Type = 1
-	Type_Float  Type = 2
-	Type_Bool   Type = 3
-	Type_String Type = 4
-	Type_blob   Type = 5
-	Type_array  Type = 6
-	Type_json   Type = 7
+	Type_Uint   Type = 2
+	Type_Float  Type = 3
+	Type_Bool   Type = 4
+	Type_String Type = 5
+	Type_Blob   Type = 6
+	Type_Array  Type = 7
+	Type_Json   Type = 8
 )
 
 var Type_name = map[int32]string{
 	0: "Null",
 	1: "Int",
-	2: "Float",
-	3: "Bool",
-	4: "String",
-	5: "blob",
-	6: "array",
-	7: "json",
+	2: "Uint",
+	3: "Float",
+	4: "Bool",
+	5: "String",
+	6: "Blob",
+	7: "Array",
+	8: "Json",
 }
 var Type_value = map[string]int32{
 	"Null":   0,
 	"Int":    1,
-	"Float":  2,
-	"Bool":   3,
-	"String": 4,
-	"blob":   5,
-	"array":  6,
-	"json":   7,
+	"Uint":   2,
+	"Float":  3,
+	"Bool":   4,
+	"String": 5,
+	"Blob":   6,
+	"Array":  7,
+	"Json":   8,
 }
 
 func (x Type) String() string {
 	return proto.EnumName(Type_name, int32(x))
 }
 func (Type) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{1}
+	return fileDescriptor_store_10366315a9a69759, []int{0}
 }
 
 type Comp int32
@@ -134,7 +102,7 @@ func (x Comp) String() string {
 	return proto.EnumName(Comp_name, int32(x))
 }
 func (Comp) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{2}
+	return fileDescriptor_store_10366315a9a69759, []int{1}
 }
 
 type Op int32
@@ -175,7 +143,7 @@ func (x Op) String() string {
 	return proto.EnumName(Op_name, int32(x))
 }
 func (Op) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{3}
+	return fileDescriptor_store_10366315a9a69759, []int{2}
 }
 
 type Value struct {
@@ -190,7 +158,7 @@ func (m *Value) Reset()         { *m = Value{} }
 func (m *Value) String() string { return proto.CompactTextString(m) }
 func (*Value) ProtoMessage()    {}
 func (*Value) Descriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{0}
+	return fileDescriptor_store_10366315a9a69759, []int{0}
 }
 func (m *Value) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Value.Unmarshal(m, b)
@@ -235,7 +203,7 @@ func (m *Entity) Reset()         { *m = Entity{} }
 func (m *Entity) String() string { return proto.CompactTextString(m) }
 func (*Entity) ProtoMessage()    {}
 func (*Entity) Descriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{1}
+	return fileDescriptor_store_10366315a9a69759, []int{1}
 }
 func (m *Entity) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Entity.Unmarshal(m, b)
@@ -275,7 +243,7 @@ func (m *Filter) Reset()         { *m = Filter{} }
 func (m *Filter) String() string { return proto.CompactTextString(m) }
 func (*Filter) ProtoMessage()    {}
 func (*Filter) Descriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{2}
+	return fileDescriptor_store_10366315a9a69759, []int{2}
 }
 func (m *Filter) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Filter.Unmarshal(m, b)
@@ -329,7 +297,7 @@ func (m *Update) Reset()         { *m = Update{} }
 func (m *Update) String() string { return proto.CompactTextString(m) }
 func (*Update) ProtoMessage()    {}
 func (*Update) Descriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{3}
+	return fileDescriptor_store_10366315a9a69759, []int{3}
 }
 func (m *Update) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Update.Unmarshal(m, b)
@@ -382,7 +350,7 @@ func (m *GetRequest) Reset()         { *m = GetRequest{} }
 func (m *GetRequest) String() string { return proto.CompactTextString(m) }
 func (*GetRequest) ProtoMessage()    {}
 func (*GetRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{4}
+	return fileDescriptor_store_10366315a9a69759, []int{4}
 }
 func (m *GetRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetRequest.Unmarshal(m, b)
@@ -429,7 +397,7 @@ func (m *GetResponse) Reset()         { *m = GetResponse{} }
 func (m *GetResponse) String() string { return proto.CompactTextString(m) }
 func (*GetResponse) ProtoMessage()    {}
 func (*GetResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{5}
+	return fileDescriptor_store_10366315a9a69759, []int{5}
 }
 func (m *GetResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetResponse.Unmarshal(m, b)
@@ -483,7 +451,7 @@ func (m *PutRequest) Reset()         { *m = PutRequest{} }
 func (m *PutRequest) String() string { return proto.CompactTextString(m) }
 func (*PutRequest) ProtoMessage()    {}
 func (*PutRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{6}
+	return fileDescriptor_store_10366315a9a69759, []int{6}
 }
 func (m *PutRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PutRequest.Unmarshal(m, b)
@@ -535,7 +503,7 @@ func (m *PutResponse) Reset()         { *m = PutResponse{} }
 func (m *PutResponse) String() string { return proto.CompactTextString(m) }
 func (*PutResponse) ProtoMessage()    {}
 func (*PutResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{7}
+	return fileDescriptor_store_10366315a9a69759, []int{7}
 }
 func (m *PutResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PutResponse.Unmarshal(m, b)
@@ -576,7 +544,7 @@ func (m *ModifyRequest) Reset()         { *m = ModifyRequest{} }
 func (m *ModifyRequest) String() string { return proto.CompactTextString(m) }
 func (*ModifyRequest) ProtoMessage()    {}
 func (*ModifyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{8}
+	return fileDescriptor_store_10366315a9a69759, []int{8}
 }
 func (m *ModifyRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ModifyRequest.Unmarshal(m, b)
@@ -638,7 +606,7 @@ func (m *ModifyResponse) Reset()         { *m = ModifyResponse{} }
 func (m *ModifyResponse) String() string { return proto.CompactTextString(m) }
 func (*ModifyResponse) ProtoMessage()    {}
 func (*ModifyResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{9}
+	return fileDescriptor_store_10366315a9a69759, []int{9}
 }
 func (m *ModifyResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ModifyResponse.Unmarshal(m, b)
@@ -698,7 +666,7 @@ func (m *DelRequest) Reset()         { *m = DelRequest{} }
 func (m *DelRequest) String() string { return proto.CompactTextString(m) }
 func (*DelRequest) ProtoMessage()    {}
 func (*DelRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{10}
+	return fileDescriptor_store_10366315a9a69759, []int{10}
 }
 func (m *DelRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DelRequest.Unmarshal(m, b)
@@ -742,7 +710,7 @@ func (m *DelResponse) Reset()         { *m = DelResponse{} }
 func (m *DelResponse) String() string { return proto.CompactTextString(m) }
 func (*DelResponse) ProtoMessage()    {}
 func (*DelResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{11}
+	return fileDescriptor_store_10366315a9a69759, []int{11}
 }
 func (m *DelResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DelResponse.Unmarshal(m, b)
@@ -772,7 +740,7 @@ func (m *KeysRequest) Reset()         { *m = KeysRequest{} }
 func (m *KeysRequest) String() string { return proto.CompactTextString(m) }
 func (*KeysRequest) ProtoMessage()    {}
 func (*KeysRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{12}
+	return fileDescriptor_store_10366315a9a69759, []int{12}
 }
 func (m *KeysRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_KeysRequest.Unmarshal(m, b)
@@ -803,7 +771,7 @@ func (m *KeysResponse) Reset()         { *m = KeysResponse{} }
 func (m *KeysResponse) String() string { return proto.CompactTextString(m) }
 func (*KeysResponse) ProtoMessage()    {}
 func (*KeysResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{13}
+	return fileDescriptor_store_10366315a9a69759, []int{13}
 }
 func (m *KeysResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_KeysResponse.Unmarshal(m, b)
@@ -830,162 +798,6 @@ func (m *KeysResponse) GetKeys() []string {
 	return nil
 }
 
-type CommandRequest struct {
-	Command              Command        `protobuf:"varint,1,opt,name=command,proto3,enum=store.Command" json:"command,omitempty"`
-	Get                  *GetRequest    `protobuf:"bytes,2,opt,name=get,proto3" json:"get,omitempty"`
-	Put                  *PutRequest    `protobuf:"bytes,3,opt,name=put,proto3" json:"put,omitempty"`
-	Modify               *ModifyRequest `protobuf:"bytes,4,opt,name=modify,proto3" json:"modify,omitempty"`
-	Del                  *DelRequest    `protobuf:"bytes,5,opt,name=del,proto3" json:"del,omitempty"`
-	Keys                 *KeysRequest   `protobuf:"bytes,6,opt,name=keys,proto3" json:"keys,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
-	XXX_unrecognized     []byte         `json:"-"`
-	XXX_sizecache        int32          `json:"-"`
-}
-
-func (m *CommandRequest) Reset()         { *m = CommandRequest{} }
-func (m *CommandRequest) String() string { return proto.CompactTextString(m) }
-func (*CommandRequest) ProtoMessage()    {}
-func (*CommandRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{14}
-}
-func (m *CommandRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_CommandRequest.Unmarshal(m, b)
-}
-func (m *CommandRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_CommandRequest.Marshal(b, m, deterministic)
-}
-func (dst *CommandRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CommandRequest.Merge(dst, src)
-}
-func (m *CommandRequest) XXX_Size() int {
-	return xxx_messageInfo_CommandRequest.Size(m)
-}
-func (m *CommandRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_CommandRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_CommandRequest proto.InternalMessageInfo
-
-func (m *CommandRequest) GetCommand() Command {
-	if m != nil {
-		return m.Command
-	}
-	return Command_Get
-}
-
-func (m *CommandRequest) GetGet() *GetRequest {
-	if m != nil {
-		return m.Get
-	}
-	return nil
-}
-
-func (m *CommandRequest) GetPut() *PutRequest {
-	if m != nil {
-		return m.Put
-	}
-	return nil
-}
-
-func (m *CommandRequest) GetModify() *ModifyRequest {
-	if m != nil {
-		return m.Modify
-	}
-	return nil
-}
-
-func (m *CommandRequest) GetDel() *DelRequest {
-	if m != nil {
-		return m.Del
-	}
-	return nil
-}
-
-func (m *CommandRequest) GetKeys() *KeysRequest {
-	if m != nil {
-		return m.Keys
-	}
-	return nil
-}
-
-type CommandResponse struct {
-	Command              Command         `protobuf:"varint,1,opt,name=command,proto3,enum=store.Command" json:"command,omitempty"`
-	Get                  *GetResponse    `protobuf:"bytes,2,opt,name=get,proto3" json:"get,omitempty"`
-	Put                  *PutResponse    `protobuf:"bytes,3,opt,name=put,proto3" json:"put,omitempty"`
-	Modify               *ModifyResponse `protobuf:"bytes,4,opt,name=modify,proto3" json:"modify,omitempty"`
-	Del                  *DelResponse    `protobuf:"bytes,5,opt,name=del,proto3" json:"del,omitempty"`
-	Keys                 *KeysResponse   `protobuf:"bytes,6,opt,name=keys,proto3" json:"keys,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
-	XXX_unrecognized     []byte          `json:"-"`
-	XXX_sizecache        int32           `json:"-"`
-}
-
-func (m *CommandResponse) Reset()         { *m = CommandResponse{} }
-func (m *CommandResponse) String() string { return proto.CompactTextString(m) }
-func (*CommandResponse) ProtoMessage()    {}
-func (*CommandResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_store_ddfee7a2f29cd7da, []int{15}
-}
-func (m *CommandResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_CommandResponse.Unmarshal(m, b)
-}
-func (m *CommandResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_CommandResponse.Marshal(b, m, deterministic)
-}
-func (dst *CommandResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CommandResponse.Merge(dst, src)
-}
-func (m *CommandResponse) XXX_Size() int {
-	return xxx_messageInfo_CommandResponse.Size(m)
-}
-func (m *CommandResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_CommandResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_CommandResponse proto.InternalMessageInfo
-
-func (m *CommandResponse) GetCommand() Command {
-	if m != nil {
-		return m.Command
-	}
-	return Command_Get
-}
-
-func (m *CommandResponse) GetGet() *GetResponse {
-	if m != nil {
-		return m.Get
-	}
-	return nil
-}
-
-func (m *CommandResponse) GetPut() *PutResponse {
-	if m != nil {
-		return m.Put
-	}
-	return nil
-}
-
-func (m *CommandResponse) GetModify() *ModifyResponse {
-	if m != nil {
-		return m.Modify
-	}
-	return nil
-}
-
-func (m *CommandResponse) GetDel() *DelResponse {
-	if m != nil {
-		return m.Del
-	}
-	return nil
-}
-
-func (m *CommandResponse) GetKeys() *KeysResponse {
-	if m != nil {
-		return m.Keys
-	}
-	return nil
-}
-
 func init() {
 	proto.RegisterType((*Value)(nil), "store.Value")
 	proto.RegisterType((*Entity)(nil), "store.Entity")
@@ -1002,9 +814,6 @@ func init() {
 	proto.RegisterType((*DelResponse)(nil), "store.DelResponse")
 	proto.RegisterType((*KeysRequest)(nil), "store.KeysRequest")
 	proto.RegisterType((*KeysResponse)(nil), "store.KeysResponse")
-	proto.RegisterType((*CommandRequest)(nil), "store.CommandRequest")
-	proto.RegisterType((*CommandResponse)(nil), "store.CommandResponse")
-	proto.RegisterEnum("store.Command", Command_name, Command_value)
 	proto.RegisterEnum("store.Type", Type_name, Type_value)
 	proto.RegisterEnum("store.Comp", Comp_name, Comp_value)
 	proto.RegisterEnum("store.Op", Op_name, Op_value)
@@ -1022,7 +831,12 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type KvsClient interface {
-	Command(ctx context.Context, opts ...grpc.CallOption) (Kvs_CommandClient, error)
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
+	Put(ctx context.Context, in *PutRequest, opts ...grpc.CallOption) (*PutResponse, error)
+	Modify(ctx context.Context, in *ModifyRequest, opts ...grpc.CallOption) (*ModifyResponse, error)
+	Del(ctx context.Context, in *DelRequest, opts ...grpc.CallOption) (*DelResponse, error)
+	DelAll(ctx context.Context, in *DelRequest, opts ...grpc.CallOption) (*DelResponse, error)
+	Keys(ctx context.Context, in *KeysRequest, opts ...grpc.CallOption) (*KeysResponse, error)
 }
 
 type kvsClient struct {
@@ -1033,140 +847,261 @@ func NewKvsClient(cc *grpc.ClientConn) KvsClient {
 	return &kvsClient{cc}
 }
 
-func (c *kvsClient) Command(ctx context.Context, opts ...grpc.CallOption) (Kvs_CommandClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Kvs_serviceDesc.Streams[0], "/store.Kvs/Command", opts...)
+func (c *kvsClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
+	out := new(GetResponse)
+	err := c.cc.Invoke(ctx, "/store.Kvs/Get", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &kvsCommandClient{stream}
-	return x, nil
+	return out, nil
 }
 
-type Kvs_CommandClient interface {
-	Send(*CommandRequest) error
-	Recv() (*CommandResponse, error)
-	grpc.ClientStream
-}
-
-type kvsCommandClient struct {
-	grpc.ClientStream
-}
-
-func (x *kvsCommandClient) Send(m *CommandRequest) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *kvsCommandClient) Recv() (*CommandResponse, error) {
-	m := new(CommandResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
+func (c *kvsClient) Put(ctx context.Context, in *PutRequest, opts ...grpc.CallOption) (*PutResponse, error) {
+	out := new(PutResponse)
+	err := c.cc.Invoke(ctx, "/store.Kvs/Put", in, out, opts...)
+	if err != nil {
 		return nil, err
 	}
-	return m, nil
+	return out, nil
+}
+
+func (c *kvsClient) Modify(ctx context.Context, in *ModifyRequest, opts ...grpc.CallOption) (*ModifyResponse, error) {
+	out := new(ModifyResponse)
+	err := c.cc.Invoke(ctx, "/store.Kvs/Modify", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *kvsClient) Del(ctx context.Context, in *DelRequest, opts ...grpc.CallOption) (*DelResponse, error) {
+	out := new(DelResponse)
+	err := c.cc.Invoke(ctx, "/store.Kvs/Del", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *kvsClient) DelAll(ctx context.Context, in *DelRequest, opts ...grpc.CallOption) (*DelResponse, error) {
+	out := new(DelResponse)
+	err := c.cc.Invoke(ctx, "/store.Kvs/DelAll", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *kvsClient) Keys(ctx context.Context, in *KeysRequest, opts ...grpc.CallOption) (*KeysResponse, error) {
+	out := new(KeysResponse)
+	err := c.cc.Invoke(ctx, "/store.Kvs/Keys", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 // KvsServer is the server API for Kvs service.
 type KvsServer interface {
-	Command(Kvs_CommandServer) error
+	Get(context.Context, *GetRequest) (*GetResponse, error)
+	Put(context.Context, *PutRequest) (*PutResponse, error)
+	Modify(context.Context, *ModifyRequest) (*ModifyResponse, error)
+	Del(context.Context, *DelRequest) (*DelResponse, error)
+	DelAll(context.Context, *DelRequest) (*DelResponse, error)
+	Keys(context.Context, *KeysRequest) (*KeysResponse, error)
 }
 
 func RegisterKvsServer(s *grpc.Server, srv KvsServer) {
 	s.RegisterService(&_Kvs_serviceDesc, srv)
 }
 
-func _Kvs_Command_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(KvsServer).Command(&kvsCommandServer{stream})
-}
-
-type Kvs_CommandServer interface {
-	Send(*CommandResponse) error
-	Recv() (*CommandRequest, error)
-	grpc.ServerStream
-}
-
-type kvsCommandServer struct {
-	grpc.ServerStream
-}
-
-func (x *kvsCommandServer) Send(m *CommandResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *kvsCommandServer) Recv() (*CommandRequest, error) {
-	m := new(CommandRequest)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
+func _Kvs_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
+	if err := dec(in); err != nil {
 		return nil, err
 	}
-	return m, nil
+	if interceptor == nil {
+		return srv.(KvsServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/store.Kvs/Get",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KvsServer).Get(ctx, req.(*GetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Kvs_Put_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PutRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KvsServer).Put(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/store.Kvs/Put",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KvsServer).Put(ctx, req.(*PutRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Kvs_Modify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ModifyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KvsServer).Modify(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/store.Kvs/Modify",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KvsServer).Modify(ctx, req.(*ModifyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Kvs_Del_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KvsServer).Del(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/store.Kvs/Del",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KvsServer).Del(ctx, req.(*DelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Kvs_DelAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KvsServer).DelAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/store.Kvs/DelAll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KvsServer).DelAll(ctx, req.(*DelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Kvs_Keys_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KeysRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KvsServer).Keys(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/store.Kvs/Keys",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KvsServer).Keys(ctx, req.(*KeysRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 var _Kvs_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "store.Kvs",
 	HandlerType: (*KvsServer)(nil),
-	Methods:     []grpc.MethodDesc{},
-	Streams: []grpc.StreamDesc{
+	Methods: []grpc.MethodDesc{
 		{
-			StreamName:    "Command",
-			Handler:       _Kvs_Command_Handler,
-			ServerStreams: true,
-			ClientStreams: true,
+			MethodName: "Get",
+			Handler:    _Kvs_Get_Handler,
+		},
+		{
+			MethodName: "Put",
+			Handler:    _Kvs_Put_Handler,
+		},
+		{
+			MethodName: "Modify",
+			Handler:    _Kvs_Modify_Handler,
+		},
+		{
+			MethodName: "Del",
+			Handler:    _Kvs_Del_Handler,
+		},
+		{
+			MethodName: "DelAll",
+			Handler:    _Kvs_DelAll_Handler,
+		},
+		{
+			MethodName: "Keys",
+			Handler:    _Kvs_Keys_Handler,
 		},
 	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "store.proto",
 }
 
-func init() { proto.RegisterFile("store.proto", fileDescriptor_store_ddfee7a2f29cd7da) }
+func init() { proto.RegisterFile("store.proto", fileDescriptor_store_10366315a9a69759) }
 
-var fileDescriptor_store_ddfee7a2f29cd7da = []byte{
-	// 815 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x55, 0xdf, 0x6b, 0xe3, 0x46,
-	0x10, 0x8e, 0x7e, 0x3a, 0x1e, 0x25, 0xce, 0x76, 0xdb, 0xb4, 0x6e, 0x28, 0x6d, 0x50, 0xd3, 0xc6,
-	0xb8, 0x4d, 0x28, 0xee, 0x4b, 0x29, 0xa1, 0xd0, 0xc6, 0x8e, 0x09, 0xf9, 0xc9, 0xa6, 0x29, 0x94,
-	0x42, 0x41, 0xb1, 0x37, 0xc1, 0x8d, 0x2c, 0x29, 0xda, 0x55, 0x88, 0xa0, 0xaf, 0xc7, 0x3d, 0xdf,
-	0x5f, 0x7c, 0xc7, 0xec, 0xae, 0x62, 0xd9, 0x70, 0x47, 0xce, 0x4f, 0x1e, 0xcf, 0x7c, 0xfb, 0xcd,
-	0x37, 0xdf, 0xce, 0x22, 0x08, 0x84, 0x4c, 0x73, 0xbe, 0x9f, 0xe5, 0xa9, 0x4c, 0xa9, 0xa7, 0xfe,
-	0x84, 0x07, 0xe0, 0xfd, 0x15, 0xc5, 0x05, 0xa7, 0xdf, 0x80, 0x2b, 0xcb, 0x8c, 0xb7, 0xad, 0x6d,
-	0xab, 0xd3, 0xea, 0x05, 0xfb, 0x1a, 0xfb, 0x67, 0x99, 0x71, 0xa6, 0x0a, 0x94, 0x82, 0x3b, 0x8e,
-	0x64, 0xd4, 0xb6, 0xb7, 0xad, 0xce, 0x1a, 0x53, 0x71, 0xf8, 0x3f, 0xf8, 0x83, 0x44, 0x4e, 0x64,
-	0x49, 0x7f, 0x30, 0x55, 0x6b, 0xdb, 0xe9, 0x04, 0xbd, 0x2f, 0xcc, 0x71, 0x5d, 0xdc, 0xef, 0x47,
-	0x32, 0x1a, 0x24, 0x32, 0x2f, 0xf5, 0xb1, 0xad, 0x01, 0x34, 0x9f, 0x53, 0x94, 0x80, 0x73, 0xcf,
-	0x4b, 0xd5, 0xb7, 0xc9, 0x30, 0xa4, 0x21, 0x78, 0x8f, 0xa8, 0x49, 0xb5, 0x0a, 0x7a, 0x6b, 0x86,
-	0x4c, 0xe9, 0x64, 0xba, 0xf4, 0xab, 0xfd, 0x8b, 0x15, 0x46, 0xe0, 0x1f, 0x4d, 0x62, 0xc9, 0x73,
-	0x14, 0x7f, 0x98, 0x4e, 0xb3, 0x05, 0xf1, 0x98, 0x62, 0xaa, 0x80, 0xe2, 0x93, 0x68, 0xaa, 0x19,
-	0x9b, 0x4c, 0xc5, 0xb3, 0x36, 0xce, 0x7b, 0xdb, 0x84, 0xff, 0x80, 0x7f, 0x9d, 0x8d, 0x23, 0xc9,
-	0xe9, 0x97, 0x60, 0xa7, 0x55, 0x83, 0xa6, 0x81, 0x5e, 0x64, 0xcc, 0x4e, 0x97, 0x27, 0x3f, 0x00,
-	0x18, 0x72, 0xc9, 0xf8, 0x43, 0xc1, 0x85, 0xa4, 0x5f, 0x41, 0x13, 0x4f, 0x8a, 0x2c, 0x1a, 0x71,
-	0xe3, 0xc6, 0x2c, 0x51, 0xb9, 0x64, 0x3f, 0xbb, 0x14, 0x8e, 0x21, 0x50, 0xa7, 0x45, 0x96, 0x26,
-	0x82, 0x7f, 0xec, 0x71, 0xfa, 0x1d, 0xf8, 0x5c, 0xdd, 0x8e, 0x51, 0xb8, 0x3e, 0x77, 0x65, 0xcc,
-	0x14, 0xc3, 0x11, 0xc0, 0x65, 0xb1, 0xac, 0xc6, 0x97, 0x36, 0xd9, 0x83, 0x40, 0x35, 0x31, 0xa3,
-	0x7c, 0x0d, 0x20, 0x8a, 0xd1, 0x88, 0x0b, 0x71, 0x5b, 0xc4, 0xaa, 0xcd, 0x2a, 0xab, 0x65, 0xc2,
-	0x37, 0x16, 0xac, 0x9f, 0xa5, 0xe3, 0xc9, 0x6d, 0xb9, 0xac, 0xae, 0x5d, 0x68, 0xdc, 0xaa, 0xcd,
-	0x11, 0x6d, 0x47, 0x2d, 0x6c, 0x25, 0x4c, 0xef, 0x13, 0xab, 0xaa, 0x08, 0x2c, 0xd4, 0xfd, 0x8b,
-	0xb6, 0x3b, 0x07, 0xd4, 0x5b, 0xc1, 0xaa, 0x6a, 0xf8, 0xda, 0x82, 0x56, 0xa5, 0x69, 0xc9, 0x1b,
-	0x99, 0x1f, 0xdb, 0x59, 0x1c, 0xbb, 0x66, 0xa6, 0xfb, 0x21, 0x33, 0x0f, 0x00, 0xfa, 0x3c, 0x5e,
-	0x76, 0xab, 0xd6, 0x21, 0x50, 0xa7, 0xf5, 0x0c, 0xf8, 0xf7, 0x84, 0x97, 0xc2, 0xb0, 0x85, 0x21,
-	0xac, 0xe9, 0xbf, 0x66, 0x44, 0x0a, 0xee, 0x3d, 0x2f, 0x85, 0x7a, 0xf5, 0x4d, 0xa6, 0xe2, 0xf0,
-	0xad, 0x05, 0xad, 0xc3, 0x74, 0x3a, 0x8d, 0x92, 0x71, 0x25, 0xa2, 0x03, 0x8d, 0x91, 0xce, 0x98,
-	0x07, 0xd4, 0x9a, 0xbd, 0x50, 0x85, 0xab, 0xca, 0xf4, 0x5b, 0x70, 0xee, 0xb8, 0x34, 0x0f, 0xff,
-	0x13, 0x83, 0x9a, 0x3d, 0x12, 0x86, 0x55, 0x04, 0x65, 0x85, 0x34, 0x2b, 0x55, 0x81, 0x66, 0x5b,
-	0xca, 0xb0, 0x4a, 0x7f, 0x04, 0x7f, 0xaa, 0xee, 0xc3, 0xb8, 0xf5, 0x99, 0xc1, 0xcd, 0x2d, 0x0e,
-	0x33, 0x18, 0xa4, 0x1c, 0xf3, 0xb8, 0xed, 0xcd, 0x51, 0xce, 0x6c, 0x64, 0x58, 0xa5, 0xdf, 0x9b,
-	0x69, 0x7d, 0x85, 0xa2, 0x06, 0x55, 0xf3, 0xc7, 0x38, 0xf0, 0xca, 0x86, 0x8d, 0x67, 0x07, 0x8c,
-	0x53, 0x2f, 0xb7, 0x60, 0xa7, 0x6e, 0x01, 0xad, 0x5b, 0xa0, 0xa9, 0xb4, 0x07, 0x3b, 0x75, 0x0f,
-	0x68, 0xdd, 0x83, 0x0a, 0x85, 0x26, 0xec, 0x2d, 0x98, 0xb0, 0xb9, 0x60, 0x82, 0xc1, 0x56, 0x2e,
-	0xec, 0xd4, 0x5d, 0xa0, 0x75, 0x17, 0x2a, 0x52, 0xb4, 0x61, 0x77, 0xce, 0x86, 0x4f, 0xe7, 0x6c,
-	0x30, 0x38, 0x05, 0xe8, 0x0e, 0xa1, 0x61, 0xa6, 0xa3, 0x0d, 0x70, 0x86, 0x5c, 0x92, 0x15, 0x0c,
-	0x2e, 0x0b, 0x49, 0x2c, 0x0a, 0xe0, 0x6b, 0x15, 0xc4, 0xc6, 0x64, 0x9f, 0xc7, 0xc4, 0xa1, 0x01,
-	0x34, 0xfa, 0x3c, 0x8e, 0x7f, 0x8f, 0x63, 0xe2, 0xd2, 0x55, 0x70, 0x91, 0x94, 0x78, 0xdd, 0xbf,
-	0xc1, 0xc5, 0x0f, 0x11, 0x66, 0xce, 0x8b, 0x38, 0xd6, 0x34, 0xc7, 0x09, 0xd2, 0x34, 0xc1, 0x3b,
-	0x8a, 0xd3, 0x48, 0x12, 0x1b, 0xab, 0x7f, 0xa4, 0x29, 0xd2, 0x00, 0xf8, 0x57, 0x32, 0x9f, 0x24,
-	0x77, 0x9a, 0xe5, 0x26, 0x4e, 0x6f, 0x88, 0x87, 0xd0, 0x28, 0xcf, 0xa3, 0x92, 0xf8, 0x98, 0xfc,
-	0x4f, 0xa4, 0x09, 0x69, 0x74, 0xfb, 0xfa, 0xcb, 0x41, 0x7d, 0xb0, 0x07, 0x0f, 0x64, 0x05, 0x7f,
-	0x87, 0xc8, 0x8b, 0x82, 0x25, 0x27, 0x36, 0x26, 0x4e, 0x25, 0x71, 0x30, 0x71, 0x2a, 0x39, 0x71,
-	0x31, 0x71, 0xce, 0x89, 0x87, 0x4d, 0x06, 0x4f, 0x13, 0x21, 0x05, 0xf1, 0xbb, 0xff, 0x82, 0x7d,
-	0x91, 0x69, 0x51, 0x23, 0xad, 0xee, 0x8a, 0x1b, 0x75, 0xd7, 0x89, 0xe0, 0xa8, 0x6e, 0x03, 0x82,
-	0xc3, 0x22, 0xcf, 0x79, 0x22, 0xfb, 0x91, 0xe4, 0x9a, 0xf0, 0x6c, 0x92, 0x10, 0x57, 0x05, 0xd1,
-	0x13, 0xf1, 0x54, 0x50, 0xc4, 0xc4, 0x47, 0xec, 0x15, 0x97, 0x17, 0xc9, 0x71, 0x22, 0x78, 0x2e,
-	0x49, 0xa3, 0x37, 0x00, 0xe7, 0xe4, 0x51, 0xd0, 0xdf, 0x66, 0x86, 0x6e, 0x2e, 0xac, 0x8f, 0x5e,
-	0xc0, 0xad, 0xcf, 0x17, 0xd3, 0xe6, 0x1d, 0xaf, 0x74, 0xac, 0x9f, 0xac, 0x1b, 0x5f, 0x7d, 0xfa,
-	0x7f, 0x7e, 0x17, 0x00, 0x00, 0xff, 0xff, 0xa9, 0x11, 0x03, 0x1e, 0x09, 0x08, 0x00, 0x00,
+var fileDescriptor_store_10366315a9a69759 = []byte{
+	// 695 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x55, 0x4b, 0x6f, 0xd3, 0x40,
+	0x10, 0x8e, 0x9f, 0xa9, 0xc7, 0x6d, 0x59, 0x16, 0x10, 0x21, 0x42, 0x50, 0x59, 0x42, 0x54, 0x45,
+	0x44, 0x22, 0x1c, 0x40, 0xa8, 0x97, 0xd2, 0xa4, 0x51, 0xe9, 0x53, 0x2e, 0xe5, 0x82, 0x84, 0xe4,
+	0x26, 0x53, 0x64, 0xd5, 0xb5, 0x5d, 0xef, 0xba, 0xaa, 0x25, 0xee, 0x9c, 0xf9, 0x2f, 0xfc, 0x40,
+	0xb4, 0x0f, 0x27, 0x4e, 0x25, 0x10, 0xcd, 0x29, 0xb3, 0xdf, 0x3c, 0xbe, 0x6f, 0x67, 0x67, 0x62,
+	0xf0, 0x19, 0xcf, 0x0a, 0xec, 0xe5, 0x45, 0xc6, 0x33, 0xea, 0xc8, 0x43, 0xb0, 0x09, 0xce, 0x97,
+	0x28, 0x29, 0x91, 0x3e, 0x07, 0x9b, 0x57, 0x39, 0x76, 0x8c, 0x35, 0x63, 0x7d, 0xb5, 0xef, 0xf7,
+	0x54, 0xec, 0xe7, 0x2a, 0xc7, 0x50, 0x3a, 0x28, 0x05, 0x7b, 0x12, 0xf1, 0xa8, 0x63, 0xae, 0x19,
+	0xeb, 0xcb, 0xa1, 0xb4, 0x83, 0x1f, 0xe0, 0x0e, 0x53, 0x1e, 0xf3, 0x8a, 0xbe, 0xd2, 0x5e, 0x63,
+	0xcd, 0x5a, 0xf7, 0xfb, 0x8f, 0x75, 0xba, 0x72, 0xf6, 0x06, 0x11, 0x8f, 0x86, 0x29, 0x2f, 0x2a,
+	0x95, 0xd6, 0x1d, 0x82, 0x37, 0x85, 0x28, 0x01, 0xeb, 0x02, 0x2b, 0xc9, 0xeb, 0x85, 0xc2, 0xa4,
+	0x01, 0x38, 0xd7, 0x42, 0x93, 0xa4, 0xf2, 0xfb, 0xcb, 0xba, 0x98, 0xd4, 0x19, 0x2a, 0xd7, 0x07,
+	0xf3, 0xbd, 0x11, 0x44, 0xe0, 0xee, 0xc4, 0x09, 0xc7, 0x42, 0x88, 0xdf, 0xce, 0x2e, 0xf3, 0x5b,
+	0xe2, 0x05, 0x14, 0x4a, 0x87, 0x10, 0x9f, 0x46, 0x97, 0xaa, 0xa2, 0x17, 0x4a, 0x7b, 0x46, 0x63,
+	0xfd, 0x95, 0x26, 0xf8, 0x0a, 0xee, 0x69, 0x3e, 0x89, 0x38, 0xd2, 0x27, 0x60, 0x66, 0x35, 0x81,
+	0xa7, 0x43, 0x8f, 0xf2, 0xd0, 0xcc, 0x16, 0x2f, 0xbe, 0x09, 0x30, 0x42, 0x1e, 0xe2, 0x55, 0x89,
+	0x8c, 0xd3, 0xa7, 0xe0, 0x89, 0x4c, 0x96, 0x47, 0x63, 0xd4, 0xdd, 0x98, 0x01, 0x75, 0x97, 0xcc,
+	0x69, 0x97, 0x82, 0x09, 0xf8, 0x32, 0x9b, 0xe5, 0x59, 0xca, 0xf0, 0xae, 0xe9, 0xf4, 0x05, 0xb8,
+	0x28, 0x5f, 0x47, 0x2b, 0x5c, 0x99, 0x7b, 0xb2, 0x50, 0x3b, 0x83, 0x31, 0xc0, 0x71, 0xb9, 0xa8,
+	0xc6, 0xff, 0x25, 0x79, 0x0d, 0xbe, 0x24, 0xd1, 0x57, 0x79, 0x06, 0xc0, 0xca, 0xf1, 0x18, 0x19,
+	0x3b, 0x2f, 0x13, 0x49, 0xb3, 0x14, 0x36, 0x90, 0xe0, 0x97, 0x01, 0x2b, 0x07, 0xd9, 0x24, 0x3e,
+	0xaf, 0x16, 0xd5, 0xf5, 0x12, 0xda, 0xe7, 0x72, 0x72, 0x58, 0xc7, 0x92, 0x03, 0x5b, 0x0b, 0x53,
+	0xf3, 0x14, 0xd6, 0x5e, 0x11, 0x58, 0xca, 0xf7, 0x67, 0x1d, 0x7b, 0x2e, 0x50, 0x4d, 0x45, 0x58,
+	0x7b, 0x83, 0x9f, 0x06, 0xac, 0xd6, 0x9a, 0x16, 0x7c, 0x91, 0xf9, 0x6b, 0x5b, 0xb7, 0xaf, 0xdd,
+	0x68, 0xa6, 0xfd, 0xaf, 0x66, 0x6e, 0x02, 0x0c, 0x30, 0x59, 0x74, 0xaa, 0x56, 0xc0, 0x97, 0xd9,
+	0xea, 0x0e, 0xe2, 0xb8, 0x87, 0x15, 0xd3, 0xd5, 0x82, 0x00, 0x96, 0xd5, 0x51, 0x5f, 0x91, 0x82,
+	0x7d, 0x81, 0x15, 0x93, 0x5b, 0xef, 0x85, 0xd2, 0xde, 0x18, 0x83, 0x2d, 0xfe, 0x35, 0xe8, 0x12,
+	0xd8, 0x87, 0x65, 0x92, 0x90, 0x16, 0x6d, 0x83, 0xb5, 0x9b, 0x72, 0x62, 0x08, 0xe8, 0x34, 0x4e,
+	0x39, 0x31, 0xa9, 0x07, 0xce, 0x4e, 0x92, 0x45, 0x9c, 0x58, 0x02, 0xfc, 0x98, 0x65, 0x09, 0xb1,
+	0x29, 0x80, 0x7b, 0xc2, 0x8b, 0x38, 0xfd, 0x4e, 0x1c, 0x89, 0x26, 0xd9, 0x19, 0x71, 0x45, 0xe8,
+	0x56, 0x51, 0x44, 0x15, 0x69, 0x0b, 0xf0, 0x13, 0xcb, 0x52, 0xb2, 0xb4, 0x31, 0x50, 0x0b, 0x4f,
+	0x5d, 0x30, 0x87, 0x57, 0xa4, 0x25, 0x7e, 0x47, 0x82, 0xa1, 0x0d, 0xd6, 0x88, 0x23, 0x31, 0x05,
+	0xb0, 0x2f, 0xaa, 0xb7, 0xc1, 0xda, 0xe7, 0x48, 0x6c, 0x01, 0x1c, 0x22, 0x71, 0x04, 0xc9, 0xf0,
+	0x26, 0x66, 0x9c, 0x11, 0x77, 0xe3, 0x1b, 0x98, 0x47, 0xb9, 0x92, 0x37, 0x56, 0x3a, 0x4f, 0x50,
+	0x54, 0xf1, 0xc0, 0x39, 0x4d, 0x19, 0x0a, 0xa1, 0xf7, 0xc0, 0xdf, 0x2e, 0x8b, 0x02, 0x53, 0x3e,
+	0x88, 0x38, 0xaa, 0x82, 0x07, 0x71, 0x4a, 0x6c, 0x69, 0x44, 0x37, 0xc4, 0x91, 0x46, 0x99, 0x10,
+	0x57, 0xc4, 0x9e, 0x20, 0x3f, 0x4a, 0x77, 0x53, 0x86, 0x05, 0x27, 0xed, 0xfe, 0x6f, 0x13, 0xac,
+	0xbd, 0x6b, 0x46, 0x7b, 0x60, 0x8d, 0x90, 0xd3, 0xfb, 0xfa, 0xc1, 0x66, 0x4b, 0xdf, 0xa5, 0x4d,
+	0x48, 0xf7, 0xbc, 0x25, 0xe2, 0x8f, 0xcb, 0x59, 0xfc, 0x6c, 0x01, 0xa7, 0xf1, 0x8d, 0x75, 0x09,
+	0x5a, 0xf4, 0x1d, 0xb8, 0x6a, 0xf6, 0xe8, 0x43, 0xed, 0x9f, 0x5b, 0x8f, 0xee, 0xa3, 0x5b, 0x68,
+	0x93, 0x68, 0x80, 0xc9, 0x94, 0x68, 0x36, 0x37, 0x53, 0xa2, 0xe6, 0x30, 0xb4, 0xe8, 0x1b, 0x70,
+	0x07, 0x98, 0x6c, 0x25, 0x77, 0x4a, 0xb1, 0xc5, 0xc8, 0xd0, 0xda, 0xdb, 0x18, 0xa7, 0xee, 0x83,
+	0x39, 0xac, 0x4e, 0x39, 0x73, 0xe5, 0x17, 0xea, 0xed, 0x9f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xb3,
+	0x8a, 0xca, 0x7e, 0xb0, 0x06, 0x00, 0x00,
 }

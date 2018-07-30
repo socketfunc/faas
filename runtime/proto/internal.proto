@@ -11,7 +11,7 @@ service Internal {
 }
 
 enum Cmd {
-	Send = 0; // low level response
+	SEND= 0; // low level response
 	REPLY = 1;
 	BROADCAST = 2;
 }

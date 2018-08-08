@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"sync"
+	"time"
 )
 
 type Emitter struct {
@@ -50,7 +51,7 @@ func (e *Emitter) Emit(eventID string) {
 	wg.Wait()
 }
 
-func Get() {
+func Get() (string, error) {
 	e := NewEmitter()
 	done := make(chan struct{}, 0)
 
@@ -58,13 +59,19 @@ func Get() {
 		defer close(done)
 		fmt.Println("called test")
 	})
+
+	time.Sleep(time.Second)
+
 	e.Emit("test")
 
 	<-done
+
+	return "value", nil
 }
 
 func main() {
 	fmt.Println("---> 1")
-	Get()
+	value, err := Get()
+	fmt.Println(value, err)
 	fmt.Println("---> 2")
 }

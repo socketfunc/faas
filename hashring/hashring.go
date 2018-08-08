@@ -116,7 +116,7 @@ func diff(newNodes, oldNodes map[string]struct{}) *Diff {
 }
 
 func New(addrs []string) *HashRing {
-	vnode := 100
+	vnode := 1000
 	ring := createRing(vnode, addrs)
 	return &HashRing{
 		vnode:    vnode,

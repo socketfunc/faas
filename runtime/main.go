@@ -6,17 +6,16 @@ import (
 
 	"github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/grpc-ecosystem/go-grpc-middleware/recovery"
-	"github.com/socketfunc/faas/proto"
 	"github.com/socketfunc/faas/runtime/manager"
+	"github.com/socketfunc/faas/runtime/proto"
 	"google.golang.org/grpc"
 )
 
 func main() {
-	lis, err := net.Listen("tcp", ":9000")
+	lis, err := net.Listen("tcp", ":8080")
 	if err != nil {
 		log.Fatal(err)
 	}
-	server := manager.New(8000)
 	s := grpc.NewServer(
 		grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
 			grpc_recovery.StreamServerInterceptor(),
@@ -25,7 +24,7 @@ func main() {
 			grpc_recovery.UnaryServerInterceptor(),
 		)),
 	)
-	faas.RegisterRuntimeServer(s, server)
+	runtime.RegisterRuntimeServer(s, manager.New())
 	if err := s.Serve(lis); err != nil {
 		log.Fatal(err)
 	}

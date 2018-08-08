@@ -1,34 +1,44 @@
 // runtime protocol
+// gateway <-> runtime
 
 syntax = "proto3";
 
 package faas;
 
 service Runtime {
-	rpc Stream (StreamRequest) returns (stream StreamResponse) {}
+	rpc Stream (stream Request) returns (stream Response) {}
 }
 
-enum Cmd {
-	Send = 0; // low level response
-	REPLY = 1;
-	BROADCAST = 2;
+enum Runtime_Cmd {
+    Stream_Cmd = 0;
+    Store_Cmd = 1;
 }
 
-message Packet {
-	string topic = 1;
-	string event = 2;
-	int32 id = 3;
-	bytes payload = 4;
+message Request {
+    Runtime_Cmd cmd = 1;
+    StreamRequest streamRequest = 2;
+}
+
+message Response {
+    Runtime_Cmd cmd = 1;
+    StreamResponse streamResponse = 2;
 }
 
 message StreamRequest {
-	int32 version = 1;
-	string id = 2;
-	Packet packet = 3;
+    string topic = 1;
+    string event = 2;
+    bytes payload = 3;
 }
 
 message StreamResponse {
-	int32 version = 1;
-	Cmd cmd = 2;
-	Packet packet = 3;
+    enum Type {
+        Send = 0;
+        Broadcast = 1;
+        Reply = 2;
+    }
+
+    Type type = 1;
+    string topic = 2;
+    string event = 3;
+    bytes payload = 4;
 }

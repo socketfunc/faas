@@ -1,0 +1,61 @@
+// runtime protocol
+
+syntax = "proto3";
+
+package runtime;
+
+import "faas/store/proto/store.proto";
+
+service Runtime {
+    rpc Stream (stream Receive) returns (stream Send) {}
+}
+
+enum Cmd {
+    Stream = 0;
+    Store = 1;
+}
+
+message Receive {
+    Cmd cmd = 1;
+    StreamRequest stream_request = 2;
+    StoreResponse store_response = 3;
+}
+
+message Send {
+    Cmd cmd = 1;
+    StreamSend stream_send = 2;
+    StoreRequest store_request = 3;
+}
+
+message StreamRequest {
+    string topic = 1;
+    string event = 2;
+    bytes payload = 3;
+}
+
+message StreamSend {
+    string topic = 1;
+    string event = 2;
+    bytes payload = 3;
+}
+
+enum Store_Cmd {
+    Get = 0;
+    Put = 1;
+    Modify = 2;
+    Del = 3;
+}
+
+message StoreRequest {
+    Store_Cmd cmd = 1;
+    string key = 2;
+    store.Entity entity = 3;
+    repeated store.Filter filters = 4;
+    repeated store.Update updates = 5;
+}
+
+message StoreResponse {
+    Store_Cmd cmd = 1;
+    bool successful = 2;
+    store.Entity entity = 3;
+}

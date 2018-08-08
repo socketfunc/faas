@@ -1,0 +1,10 @@
+// gateway protocol
+// proxy <-> gateway
+
+syntax = "proto3";
+
+package faas;
+
+service Gateway {
+
+}

@@ -8,11 +8,12 @@ import "faas/store/proto/store.proto";
 
 service Runtime {
     rpc Stream (stream Receive) returns (stream Send) {}
+    rpc HealthCheck (HealthCheckRequest) returns (HealthCheckResponse) {}
 }
 
 enum Cmd {
-    Stream = 0;
-    Store = 1;
+    STREAM = 0;
+    STORE = 1;
 }
 
 message Receive {
@@ -40,10 +41,10 @@ message StreamSend {
 }
 
 enum Store_Cmd {
-    Get = 0;
-    Put = 1;
-    Modify = 2;
-    Del = 3;
+    GET = 0;
+    PUT = 1;
+    MODIFY = 2;
+    DEL = 3;
 }
 
 message StoreRequest {
@@ -58,4 +59,17 @@ message StoreResponse {
     Store_Cmd cmd = 1;
     bool successful = 2;
     store.Entity entity = 3;
+}
+
+message HealthCheckRequest {
+    string service = 1;
+}
+
+message HealthCheckResponse {
+    enum ServingStatus {
+        UNKNOWN = 0;
+        SERVING = 1;
+        NOT_SERVING = 2;
+    }
+    ServingStatus status = 1;
 }

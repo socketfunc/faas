@@ -2,17 +2,17 @@ package main
 
 import (
 	"context"
-	"log"
-
 	"fmt"
 	"io"
+	"log"
 
 	"github.com/socketfunc/faas/runtime/proto"
+	"github.com/socketfunc/faas/store/proto"
 	"google.golang.org/grpc"
 )
 
 func main() {
-	conn, err := grpc.Dial("localhost:8081", grpc.WithInsecure())
+	conn, err := grpc.Dial("localhost:8080", grpc.WithInsecure())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -27,7 +27,7 @@ func main() {
 	go receive(done, stream)
 
 	rec := &runtime.Receive{
-		Cmd: runtime.Cmd_Stream,
+		Cmd: runtime.Cmd_STREAM,
 		StreamRequest: &runtime.StreamRequest{
 			Topic:   "topic",
 			Event:   "event",
@@ -42,13 +42,38 @@ func main() {
 }
 
 func receive(done chan struct{}, stream runtime.Runtime_StreamClient) {
-	resp, err := stream.Recv()
-	fmt.Println(resp, err)
-	if err == io.EOF {
-		close(done)
-		return
-	}
-	if err != nil {
-		log.Fatal(err)
+	for {
+		resp, err := stream.Recv()
+		fmt.Println(resp, err)
+		if err == io.EOF {
+			close(done)
+			return
+		}
+		if err != nil {
+			log.Fatal(err)
+		}
+		if resp.Cmd == runtime.Cmd_STORE {
+			switch resp.StoreRequest.Cmd {
+			case runtime.Store_Cmd_GET:
+				recv := &runtime.Receive{
+					Cmd: runtime.Cmd_STORE,
+					StoreResponse: &runtime.StoreResponse{
+						Cmd: runtime.Store_Cmd_GET,
+						Entity: &store.Entity{
+							Data: map[string]*store.Value{
+								"id": {
+									Type: store.Type_String,
+									Data: []byte("test"),
+								},
+							},
+						},
+					},
+				}
+				stream.Send(recv)
+			case runtime.Store_Cmd_PUT:
+			case runtime.Store_Cmd_MODIFY:
+			case runtime.Store_Cmd_DEL:
+			}
+		}
 	}
 }

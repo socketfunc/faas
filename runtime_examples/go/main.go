@@ -2,14 +2,28 @@ package main
 
 import (
 	"context"
+	"fmt"
+	"time"
 
-	"github.com/socketfunc/faas/runtime/engine/go"
+	"github.com/socketfunc/faas/runtime/go/server"
+	"github.com/socketfunc/faas/runtime/go/store"
 )
 
-func handler(ctx context.Context, req *runtime.Request, res runtime.Response) {
-	res.Send("topic", "event", []byte("message data"))
+type Value struct {
+	ID string `store:"id"`
 }
 
-func main() {
-	runtime.Start(handler)
+func Handler(ctx context.Context, req server.Request, res server.Response) {
+	fmt.Println("handler")
+
+	value := &Value{}
+	store.Get(ctx, "key", value)
+
+	fmt.Println(req.Topic(), req.Event(), string(req.Payload()))
+
+	res.Send("topic1", "event1", []byte("message1"))
+
+	time.Sleep(time.Second)
+
+	res.Send("topic2", "event2", []byte("message2"))
 }

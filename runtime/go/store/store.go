@@ -119,13 +119,13 @@ func Modify(ctx context.Context, key string, filters []*Filter, updates []*Updat
 		return false, errors.New("cannot client")
 	}
 
-	fs := make([]*store.Filter, 0, len(filters))
+	fl := make([]*store.Filter, 0, len(filters))
 	for _, filter := range filters {
 		value, err := encodeValue(filter.Value)
 		if err != nil {
 			return false, err
 		}
-		fs = append(fs, &store.Filter{
+		fl = append(fl, &store.Filter{
 			Comp:  store.Comp(filter.Comp),
 			Name:  filter.Name,
 			Value: value,
@@ -149,7 +149,7 @@ func Modify(ctx context.Context, key string, filters []*Filter, updates []*Updat
 		StoreRequest: &pb.StoreRequest{
 			Cmd:     pb.Store_Cmd_MODIFY,
 			Key:     key,
-			Filters: fs,
+			Filters: fl,
 			Updates: up,
 		},
 	}

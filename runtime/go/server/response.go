@@ -49,7 +49,17 @@ func (r *response) Reply(payload []byte) {
 }
 
 func (r *response) Broadcast(event string, payload []byte) {
-
+	send := &pb.Send{
+		Cmd: pb.Cmd_STREAM,
+		StreamSend: &pb.StreamSend{
+			Topic:   r.topic,
+			Event:   event,
+			Payload: payload,
+		},
+	}
+	if err := r.stream.Send(send); err != nil {
+		log.Printf("%+v\n", err)
+	}
 }
 
 func newResponse(topic, event string, stream pb.Runtime_StreamServer) *response {

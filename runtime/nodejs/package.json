@@ -2,6 +2,6 @@
   "name": "socketfunc",
   "version": "0.0.1",
   "dependencies": {
-    
+    "grpc": "^1.14.0"
   }
 }

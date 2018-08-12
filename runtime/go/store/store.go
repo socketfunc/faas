@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	pb "github.com/socketfunc/faas/runtime/proto"
+	"github.com/socketfunc/faas/store/proto"
 )
 
 const (
@@ -31,7 +32,7 @@ const (
 type Filter struct {
 	Comp  Comp
 	Name  string
-	value interface{}
+	Value interface{}
 }
 
 type Op int32
@@ -51,7 +52,7 @@ type Update struct {
 func Get(ctx context.Context, key string, value interface{}) error {
 	client, ok := ctx.Value(CtxKey).(*Client)
 	if !ok {
-		return errors.New("cannot be client")
+		return errors.New("cannot client")
 	}
 
 	req := &pb.Send{
@@ -70,7 +71,9 @@ func Get(ctx context.Context, key string, value interface{}) error {
 		return err
 	}
 
-	fmt.Println(res.StoreResponse.Entity)
+	if err := decodeEntity(res.StoreResponse.Entity, value); err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -78,13 +81,102 @@ func Get(ctx context.Context, key string, value interface{}) error {
 func Put(ctx context.Context, key string, value interface{}) error {
 	client, ok := ctx.Value(CtxKey).(*Client)
 	if !ok {
-		return errors.New("cannot be client")
+		return errors.New("cannot client")
+	}
+
+	entity, err := encodeEntity(value)
+	if err != nil {
+		return err
 	}
 
 	req := &pb.Send{
 		Cmd: pb.Cmd_STORE,
 		StoreRequest: &pb.StoreRequest{
-			Cmd: pb.Store_Cmd_PUT,
+			Cmd:    pb.Store_Cmd_PUT,
+			Key:    key,
+			Entity: entity,
+		},
+	}
+
+	if err := client.Stream.Send(req); err != nil {
+		return err
+	}
+	res, err := client.Stream.Recv()
+	if err != nil {
+		return err
+	}
+
+	if !res.StoreResponse.Successful {
+		return errors.New("")
+	}
+
+	return nil
+}
+
+func Modify(ctx context.Context, key string, filters []*Filter, updates []*Update, value interface{}) (bool, error) {
+	client, ok := ctx.Value(CtxKey).(*Client)
+	if !ok {
+		return false, errors.New("cannot client")
+	}
+
+	fs := make([]*store.Filter, 0, len(filters))
+	for _, filter := range filters {
+		value, err := encodeValue(filter.Value)
+		if err != nil {
+			return false, err
+		}
+		fs = append(fs, &store.Filter{
+			Comp:  store.Comp(filter.Comp),
+			Name:  filter.Name,
+			Value: value,
+		})
+	}
+	up := make([]*store.Update, 0, len(updates))
+	for _, update := range updates {
+		value, err := encodeValue(update.Value)
+		if err != nil {
+			return false, err
+		}
+		up = append(up, &store.Update{
+			Op:    store.Op(update.Op),
+			Name:  update.Name,
+			Value: value,
+		})
+	}
+
+	req := &pb.Send{
+		Cmd: pb.Cmd_STORE,
+		StoreRequest: &pb.StoreRequest{
+			Cmd:     pb.Store_Cmd_MODIFY,
+			Key:     key,
+			Filters: fs,
+			Updates: up,
+		},
+	}
+
+	if err := client.Stream.Send(req); err != nil {
+		return false, err
+	}
+	res, err := client.Stream.Recv()
+	if err != nil {
+		return false, err
+	}
+
+	fmt.Println(res)
+
+	return false, nil
+}
+
+func Del(ctx context.Context, key string) error {
+	client, ok := ctx.Value(CtxKey).(*Client)
+	if !ok {
+		return errors.New("cannot client")
+	}
+
+	req := &pb.Send{
+		Cmd: pb.Cmd_STORE,
+		StoreRequest: &pb.StoreRequest{
+			Cmd: pb.Store_Cmd_DEL,
 			Key: key,
 		},
 	}
@@ -97,15 +189,7 @@ func Put(ctx context.Context, key string, value interface{}) error {
 		return err
 	}
 
-	fmt.Println(res.StoreResponse.Successful)
+	fmt.Println(res)
 
-	return nil
-}
-
-func Modify(ctx context.Context, key string, filters []*Filter, updates []*Update, value interface{}) (bool, error) {
-	return false, nil
-}
-
-func Del(ctx context.Context, key string) error {
 	return nil
 }

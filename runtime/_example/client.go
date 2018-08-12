@@ -65,6 +65,10 @@ func receive(done chan struct{}, stream runtime.Runtime_StreamClient) {
 									Type: store.Type_String,
 									Data: []byte("test"),
 								},
+								"no": {
+									Type: store.Type_Int,
+									Data: []byte{0, 0, 0, 0, 0, 0, 0, 100},
+								},
 							},
 						},
 					},

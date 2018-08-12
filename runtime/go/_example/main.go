@@ -11,6 +11,7 @@ import (
 
 type Value struct {
 	ID string `store:"id"`
+	No int    `store:"no"`
 }
 
 func Handler(ctx context.Context, req server.Request, res server.Response) {
@@ -18,6 +19,7 @@ func Handler(ctx context.Context, req server.Request, res server.Response) {
 
 	value := &Value{}
 	store.Get(ctx, "key", value)
+	fmt.Println(value)
 
 	fmt.Println(req.Topic(), req.Event(), string(req.Payload()))
 

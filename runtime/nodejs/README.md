@@ -1,5 +1,7 @@
 # runtime for Node.js
 
+`PARCEL`を使用してハンドラーをビルドして1つにまとめる
+
 ### config
 
 ```yaml

@@ -15,4 +15,7 @@
 
 /runtime/runtime
 
+vendor
 node_modules
+/runtime/nodejs/dist/
+.cache

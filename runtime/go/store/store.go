@@ -63,16 +63,30 @@ func Get(ctx context.Context, key string, value interface{}) error {
 		},
 	}
 
+	done := make(chan struct{}, 1)
+
+	var res *pb.Receive
+	var err error
+	go func() {
+		defer close(done)
+		res, err = client.Stream.Recv()
+		fmt.Println("store get finish")
+	}()
+
 	if err := client.Stream.Send(req); err != nil {
 		return err
 	}
-	res, err := client.Stream.Recv()
-	if err != nil {
-		return err
-	}
 
-	if err := decodeEntity(res.StoreResponse.Entity, value); err != nil {
-		return err
+	select {
+	case <-done:
+		if err != nil {
+			return err
+		}
+		if err := decodeEntity(res.StoreResponse.Entity, value); err != nil {
+			return err
+		}
+	case <-ctx.Done():
+		return errors.New("timeout")
 	}
 
 	return nil
@@ -98,16 +112,28 @@ func Put(ctx context.Context, key string, value interface{}) error {
 		},
 	}
 
+	done := make(chan struct{}, 1)
+
+	var res *pb.Receive
+	go func() {
+		defer close(done)
+		res, err = client.Stream.Recv()
+	}()
+
 	if err := client.Stream.Send(req); err != nil {
 		return err
 	}
-	res, err := client.Stream.Recv()
-	if err != nil {
-		return err
-	}
 
-	if !res.StoreResponse.Successful {
-		return errors.New("")
+	select {
+	case <-done:
+		if err != nil {
+			return err
+		}
+		if !res.StoreResponse.Successful {
+			return errors.New("")
+		}
+	case <-ctx.Done():
+		return errors.New("timeout")
 	}
 
 	return nil
@@ -154,17 +180,32 @@ func Modify(ctx context.Context, key string, filters []*Filter, updates []*Updat
 		},
 	}
 
+	done := make(chan struct{}, 1)
+
+	var res *pb.Receive
+	var err error
+	go func() {
+		defer close(done)
+		res, err = client.Stream.Recv()
+	}()
+
 	if err := client.Stream.Send(req); err != nil {
 		return false, err
 	}
-	res, err := client.Stream.Recv()
-	if err != nil {
-		return false, err
+
+	select {
+	case <-done:
+		if err != nil {
+			return false, err
+		}
+		if err := decodeEntity(res.StoreResponse.Entity, value); err != nil {
+			return false, err
+		}
+	case <-ctx.Done():
+		return false, errors.New("timeout")
 	}
 
-	fmt.Println(res)
-
-	return false, nil
+	return res.StoreResponse.Successful, nil
 }
 
 func Del(ctx context.Context, key string) error {
@@ -181,15 +222,27 @@ func Del(ctx context.Context, key string) error {
 		},
 	}
 
+	done := make(chan struct{}, 1)
+
+	var res *pb.Receive
+	var err error
+	go func() {
+		defer close(done)
+		res, err = client.Stream.Recv()
+	}()
+
 	if err := client.Stream.Send(req); err != nil {
 		return err
 	}
-	res, err := client.Stream.Recv()
-	if err != nil {
-		return err
-	}
 
-	fmt.Println(res)
+	select {
+	case <-done:
+		if err != nil {
+			return err
+		}
+	case <-ctx.Done():
+		return errors.New("timeout")
+	}
 
 	return nil
 }

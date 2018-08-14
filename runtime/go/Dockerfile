@@ -1,0 +1,3 @@
+ARG VERSION=1.10.3
+
+FROM golang:${VERSION} AS build

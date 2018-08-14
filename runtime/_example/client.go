@@ -55,6 +55,7 @@ func receive(done chan struct{}, stream runtime.Runtime_StreamClient) {
 		if resp.Cmd == runtime.Cmd_STORE {
 			switch resp.StoreRequest.Cmd {
 			case runtime.Store_Cmd_GET:
+				// time.Sleep(time.Duration(10) * time.Second)
 				recv := &runtime.Receive{
 					Cmd: runtime.Cmd_STORE,
 					StoreResponse: &runtime.StoreResponse{

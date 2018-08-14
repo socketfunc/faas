@@ -15,6 +15,7 @@ type Handler func(ctx context.Context, req Request, res Response)
 
 type server struct {
 	handler Handler
+	status  pb.HealthCheckResponse_ServingStatus
 }
 
 func (s *server) Stream(stream pb.Runtime_StreamServer) error {
@@ -24,7 +25,8 @@ func (s *server) Stream(stream pb.Runtime_StreamServer) error {
 		}
 	}()
 
-	ctx := context.Background()
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 	sc := &store.Client{
 		Stream: stream,
 	}
@@ -39,6 +41,7 @@ func (s *server) Stream(stream pb.Runtime_StreamServer) error {
 	timer := time.NewTimer(time.Duration(30) * time.Second)
 	go func() {
 		<-timer.C
+		cancel()
 	}()
 
 	if in.Cmd == pb.Cmd_STREAM {
@@ -54,13 +57,18 @@ func (s *server) Stream(stream pb.Runtime_StreamServer) error {
 
 func (s *server) HealthCheck(ctx context.Context, req *pb.HealthCheckRequest) (*pb.HealthCheckResponse, error) {
 	res := &pb.HealthCheckResponse{
-		Status: pb.HealthCheckResponse_SERVING,
+		Status: s.status,
 	}
 	return res, nil
+}
+
+func (s *server) Stop() {
+	s.status = pb.HealthCheckResponse_NOT_SERVING
 }
 
 func New(handler Handler) *server {
 	return &server{
 		handler: handler,
+		status:  pb.HealthCheckResponse_SERVING,
 	}
 }

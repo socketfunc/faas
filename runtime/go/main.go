@@ -6,7 +6,10 @@ import (
 	"log"
 	"net"
 	"os"
+	"os/signal"
 	"plugin"
+	"syscall"
+	"time"
 
 	"github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/grpc-ecosystem/go-grpc-middleware/recovery"
@@ -39,9 +42,26 @@ func main() {
 	)
 
 	runtime.RegisterRuntimeServer(s, srv)
+
+	closed := make(chan struct{}, 1)
+	go func() {
+		sig := make(chan os.Signal, 1)
+		signal.Notify(sig, syscall.SIGTERM)
+		<-sig
+
+		log.Println("SIGTERM received... shutdown server")
+		srv.Stop()
+		s.GracefulStop()
+		<-time.Tick(time.Duration(10) * time.Second)
+
+		close(closed)
+	}()
+
 	if err := s.Serve(lis); err != nil {
 		log.Fatal(err)
 	}
+
+	<-closed
 }
 
 func loadPlugin(codePath, entryPoint string) (server.Handler, error) {
